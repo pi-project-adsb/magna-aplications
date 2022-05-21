@@ -75,8 +75,17 @@ clonar_github(){
 
 rodando_aplicacao() {
 	echo "Rodando a aplicacao..."
-	java -jar data-capture-1.0-SNAPSHOT-jar-with-dependencies.jar
+	clear
 	echo "\nTudo pronto...\n"
+	echo "\nGostaria de rodar nossa aplicação?\n"
+				read run
+			if [ \"$run\" == \"Y\" || \"$run\" == \"y\"]
+			then
+	java -jar data-capture-1.0-SNAPSHOT-jar-with-dependencies.jar
+else
+	echo "\nEntao ta, nos vemos na próxima!\n"
+
+fi
 }
 
 instalar_docker(){
