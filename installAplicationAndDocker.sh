@@ -76,7 +76,7 @@ clonar_github(){
 	echo "\nClonando github e criando pastas...\n"
 	wget -O totemSitem.jar https://github.com/pi-project-adsb/magna-aplications/blob/65c37a1ce8c1375698310e6ac608dd42409c3226/data-capture-1.0-SNAPSHOT-jar-with-dependencies.jar 
 	echo "Criando uma pasta para o projeto..."
-	mkdir magna && mv ./magna.jar totem/magna-aplications.jar && cd magna
+	mkdir magna && mv ./magna.jar magna/magna-aplications.jar && cd magna
 	echo "\nTudo pronto...\n"
 }
 instalar_docker(){
