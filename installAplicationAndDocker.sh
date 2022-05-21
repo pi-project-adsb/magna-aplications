@@ -25,18 +25,16 @@ Instruções para Ajuda:
 
 #-TESTES--------------------------------------------------------------------------#
 
-
-
 #-LOOP PARA RODAR MAIS PARAMETROS---------------------------------------------------#
 
 while test -n "$1"; do
 
 	case $1 in
 
-		-i |  --info)  	echo "$varINFO" 											;;		
-		-h |  --help)  	echo "$varHELP"												;;
-		-d | --debug)	bash -x $0													;;
-		 *) 	echo "\nComando inválido. Digite -h ou --help para ajuda\n"	;;
+	-i | --info) echo "$varINFO" ;;
+	-h | --help) echo "$varHELP" ;;
+	-d | --debug) bash -x $0 ;;
+	*) echo "\nComando inválido. Digite -h ou --help para ajuda\n" ;;
 
 	esac
 	shift
@@ -44,7 +42,7 @@ while test -n "$1"; do
 done
 #-FUNÇÕES--------------------------------------------------------------------------#
 
-instalar_pacotes(){
+instalar_pacotes() {
 	echo "\nInstalando e verificando todos os pacotes...\n"
 	sleep 1
 	echo "Dando update nos arquivos..."
@@ -59,7 +57,7 @@ instalar_pacotes(){
 	[ ! -x $(which docker) ] && instalar_docker
 }
 
-criar_urubu100(){
+criar_urubu100() {
 	echo "\nCriando usuário urubu100...\n"
 	sleep 1
 	adduser urubu100
@@ -67,7 +65,7 @@ criar_urubu100(){
 	usermod -aG sudo urubu100
 }
 
-clonar_github(){
+clonar_github() {
 	echo "\nClonando github e criando pastas...\n"
 	git clone https://github.com/pi-project-adsb/magna-aplications.git
 
@@ -78,31 +76,31 @@ rodando_aplicacao() {
 	clear
 	echo "\nTudo pronto...\n"
 	echo "\nGostaria de rodar nossa aplicação?\n"
-				read run
-			if [ \"$run\" == \"Y\" || \"$run\" == \"y\"]
-			then
-	java -jar data-capture-1.0-SNAPSHOT-jar-with-dependencies.jar
-else
-	echo "\nEntao ta, nos vemos na próxima!\n"
+	read run
+	if [ \"$run\" == \"Y\"] || [ \"$run\" == \"y\"]; then
+		java -jar data-capture-1.0-SNAPSHOT-jar-with-dependencies.jar
+	else
+		echo "\nEntao ta, nos vemos na próxima!\n"
 
-fi
+	fi
 }
 
-instalar_docker(){
+instalar_docker() {
 	sudo apt install docker.io
 	sudo systemctl start docker
-	sudo systemctl enable  docker
+	sudo systemctl enable docker
 	sudo docker pull mysql:latest
 	sudo docker run -d -p 3306:3306 --name totemsystem -e "MYSQL_DATABASE=totemsystem" -e "MYSQL_ROOT_PASSWORD=urubu100" mysql:latest
 	sudo docker exec -it totemsystem bash
-	
+
 }
 
-main(){
+main() {
 	# criar_urubu100
-	instalar_pacotes
-	clonar_github
+	#instalar_pacotes
+	#clonar_github
 	rodando_aplicacao
+	instalar_docker
 
 }
 
