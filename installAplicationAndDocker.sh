@@ -45,7 +45,6 @@ done
 #-FUNÇÕES--------------------------------------------------------------------------#
 
 instalar_pacotes(){
-
 	echo "\nInstalando e verificando todos os pacotes...\n"
 	sleep 1
 	echo "Dando update nos arquivos..."
@@ -58,29 +57,29 @@ instalar_pacotes(){
 	[ ! -x $(which git) ] && sudo apt-get install git-all
 	echo "Verificando docker..."
 	[ ! -x $(which docker) ] && instalar_docker
-
 }
-criar_urubu100(){
 
+criar_urubu100(){
 	echo "\nCriando usuário urubu100...\n"
 	sleep 1
 	adduser urubu100
 	echo "Dando permissão de sudo para urubu100..."
 	usermod -aG sudo urubu100
-	
+}
+
+clonar_github(){
+	echo "\nClonando github e criando pastas...\n"
+	git clone https://github.com/pi-project-adsb/magna-aplications.git
 
 }
-clonar_github(){
 
-
-	echo "\nClonando github e criando pastas...\n"
-	wget -O magna.jar https://github.com/pi-project-adsb/magna-aplications/blob/65c37a1ce8c1375698310e6ac608dd42409c3226/data-capture-1.0-SNAPSHOT-jar-with-dependencies.jar 
-	echo "Criando uma pasta para o projeto..."
-	mkdir magna && mv ./magna.jar magna/magna-aplications.jar && cd magna
+rodando_aplicacao() {
+	echo "Rodando a aplicacao..."
+	java -jar data-capture-1.0-SNAPSHOT-jar-with-dependencies.jar
 	echo "\nTudo pronto...\n"
 }
-instalar_docker(){
 
+instalar_docker(){
 	sudo apt install docker.io
 	sudo systemctl start docker
 	sudo systemctl enable  docker
@@ -91,11 +90,10 @@ instalar_docker(){
 }
 
 main(){
-
-
 	# criar_urubu100
 	instalar_pacotes
 	clonar_github
+	rodando_aplicacao
 
 }
 
