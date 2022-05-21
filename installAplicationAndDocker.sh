@@ -90,8 +90,8 @@ instalar_docker() {
 	sudo systemctl start docker
 	sudo systemctl enable docker
 	sudo docker pull mysql:latest
-	sudo docker run -d -p 3306:3306 --name totemsystem -e "MYSQL_DATABASE=totemsystem" -e "MYSQL_ROOT_PASSWORD=urubu100" mysql:latest
-	sudo docker exec -it totemsystem bash
+	sudo docker run -d -p 3306:3306 --name magna -e "MYSQL_DATABASE=magna" -e "MYSQL_ROOT_PASSWORD=urubu100" mysql:latest
+	sudo docker exec -it magna bash
 
 }
 
