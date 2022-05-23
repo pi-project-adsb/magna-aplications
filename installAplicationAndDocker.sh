@@ -34,7 +34,7 @@ while test -n "$1"; do
 	-i | --info) echo "$varINFO" ;;
 	-h | --help) echo "$varHELP" ;;
 	-d | --debug) bash -x $0 ;;
-	*) echo "\nComando inválido. Digite -h ou --help para ajuda\n" ;;
+	*) echo "\n Comando inválido. Digite -h ou --help para ajuda \n" ;;
 
 	esac
 	shift
@@ -43,7 +43,7 @@ done
 #-FUNÇÕES--------------------------------------------------------------------------#
 
 instalar_pacotes() {
-	echo "\nInstalando e verificando todos os pacotes...\n"
+	echo "\n Instalando e verificando todos os pacotes... \n"
 	sleep 1
 	echo "Dando update nos arquivos..."
 	sudo apt-get update && sudo apt-get upgrade -y
@@ -58,7 +58,7 @@ instalar_pacotes() {
 }
 
 criar_urubu100() {
-	echo "\nCriando usuário urubu100...\n"
+	echo "\n Criando usuário urubu100... \n"
 	sleep 1
 	adduser urubu100
 	echo "Dando permissão de sudo para urubu100..."
@@ -66,32 +66,50 @@ criar_urubu100() {
 }
 
 clonar_github() {
-	echo "\nClonando github e criando pastas...\n"
+	echo "\n Clonando github e criando pastas... \n"
 	git clone https://github.com/pi-project-adsb/magna-aplications.git
+	cd magna-aplications
 
 }
 
 rodando_aplicacao() {
 	echo "Rodando a aplicacao..."
 	clear
-	echo "\nTudo pronto...\n"
-	echo "\nGostaria de rodar nossa aplicação?\n"
+	echo "\n Tudo pronto... \n"
+	echo "\n Gostaria de rodar nossa aplicação? \n"
 	read run
-	if [ \"$run\" == \"Y\"] || [ \"$run\" == \"y\"]; then
+	#if [ \"$run\" == \"Y\"] || [ \"$run\" == \"y\"]; then
 		java -jar data-capture-1.0-SNAPSHOT-jar-with-dependencies.jar
-	else
-		echo "\nEntao ta, nos vemos na próxima!\n"
+	#else
+		#echo "\nEntao ta, nos vemos na próxima!\n"
 
-	fi
+	#fi
 }
 
-instalar_docker() {
+install_docker() {
 	sudo apt install docker.io
+	#systemctl = inicia serviço
 	sudo systemctl start docker
 	sudo systemctl enable docker
-	sudo docker pull mysql:latest
-	sudo docker run -d -p 3306:3306 --name magna -e "MYSQL_DATABASE=magna" -e "MYSQL_ROOT_PASSWORD=urubu100" mysql:latest
-	sudo docker exec -it magna bash
+	sudo docker network create java_mysql
+}
+
+docker_mysql() {
+	#-d = dessasociar do terminal (deixar de rodar apenas no terminal, deixa rodando em background)
+	#-p = set a porta
+ 	sudo docker build -t mysql_magna .
+	#recebe a requisicao do docker e depois da maquina
+	sudo docker run -d -p 3306:3306 --name magnaSQL --net=java_mysql -e "MYSQL_ROOT_PASSWORD=urubu100" mysql_magna
+	#executa um comando -t = comando interativo; magna bash = entre no terminal, de modo interativo
+	#sudo docker exec -it magnaSQL bash
+
+}
+
+docker_data_capture() {
+ 	sudo docker build -t data_capture_magna .
+	sudo docker run -it --name data_capture_java --link magnaSQL --net=java_mysql data_capture_magna
+	#executa um comando -t = comando interativo; magna bash = entre no terminal, de modo interativo
+	#sudo docker exec -it magnaSQL bash
 
 }
 
@@ -99,8 +117,9 @@ main() {
 	# criar_urubu100
 	#instalar_pacotes
 	#clonar_github
+	install_docker
+	docker_mysql
 	rodando_aplicacao
-	instalar_docker
 
 }
 
