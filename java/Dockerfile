@@ -1,6 +1,6 @@
 FROM openjdk:11
 
-COPY /MagnaJavaCLI.jar/MagnaJavaCLI.jar
+COPY /MagnaJavaCLI.jar /MagnaJavaCLI.jar
 
 RUN mkdir /etc/init
 

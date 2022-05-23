@@ -47,4 +47,6 @@ create table if not exists processo (
     FOREIGN KEY (fk_totem) REFERENCES totem(id)
 );
 
+insert into empresa(email, senha) values ("lucas@gmail.com", "12345678");
+
 
