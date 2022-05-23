@@ -92,6 +92,13 @@ install_docker() {
 	sudo systemctl start docker
 	sudo systemctl enable docker
 	sudo docker network create java_mysql
+
+	cd /magna-aplications
+	cd /mysql
+	docker_mysql
+	cd ..
+	cd /java
+	docker_data_capture
 }
 
 docker_mysql() {
@@ -114,12 +121,10 @@ docker_data_capture() {
 }
 
 main() {
-	# criar_urubu100
-	#instalar_pacotes
-	#clonar_github
+
+	instalar_pacotes
+	clonar_github
 	install_docker
-	docker_mysql
-	rodando_aplicacao
 
 }
 
