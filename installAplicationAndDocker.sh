@@ -65,6 +65,8 @@ criar_urubu100() {
 	echo "Dando permissão de sudo para urubu100..."
 	sudo usermod -aG sudo urubu100
 	sudo passwd urubu100
+	su urubu100
+
 }
 
 clonar_github() {
@@ -118,16 +120,15 @@ docker_data_capture() {
  	sudo docker build -t data_capture_magna .
 	sudo docker run -it --name data_capture_java --link magnaSQL --net=java_mysql data_capture_magna
 	#executa um comando -t = comando interativo; magna bash = entre no terminal, de modo interativo
-	#sudo docker exec -it magnaSQL bash
+	#sudo docker exec -it data_capture_java bash
 
 }
 
 main() {
-
+	criar_urubu100
 	instalar_pacotes
 	clonar_github
 	install_docker
-
 }
 
 #-EXECUÇÃO-------------------------------------------------------------------------#
