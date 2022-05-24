@@ -61,10 +61,10 @@ criar_urubu100() {
 	echo "\n Criando usuário urubu100... \n"
 	sleep 1
 	sudo passwd ubuntu
-	sudo adduser urubu100 -p urubu100
+	sudo adduser urubu100
+	
 	echo "Dando permissão de sudo para urubu100..."
 	sudo usermod -aG sudo urubu100
-	sudo passwd urubu100
 	su urubu100
 
 }
