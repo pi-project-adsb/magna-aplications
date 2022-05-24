@@ -69,6 +69,7 @@ clonar_github() {
 	echo "\n Clonando github e criando pastas... \n"
 	git clone https://github.com/pi-project-adsb/magna-aplications.git
 	cd magna-aplications
+	chmod +x installAplicationAndDocker.sh
 
 }
 
@@ -93,11 +94,11 @@ install_docker() {
 	sudo systemctl enable docker
 	sudo docker network create java_mysql
 
-	cd /magna-aplications
-	cd /mysql
+	cd magna-aplications
+	cd mysql
 	docker_mysql
 	cd ..
-	cd /java
+	cd java
 	docker_data_capture
 }
 
