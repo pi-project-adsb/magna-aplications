@@ -60,16 +60,17 @@ instalar_pacotes() {
 criar_urubu100() {
 	echo "\n Criando usuário urubu100... \n"
 	sleep 1
-	adduser urubu100
+	sudo passwd ubuntu
+	sudo adduser urubu100 -p urubu100
 	echo "Dando permissão de sudo para urubu100..."
-	usermod -aG sudo urubu100
+	sudo usermod -aG sudo urubu100
+	sudo passwd urubu100
 }
 
 clonar_github() {
 	echo "\n Clonando github e criando pastas... \n"
 	git clone https://github.com/pi-project-adsb/magna-aplications.git
-	cd magna-aplications
-	chmod +x installAplicationAndDocker.sh
+	cd magna-aplications	
 
 }
 
