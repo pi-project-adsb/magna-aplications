@@ -42,73 +42,64 @@ while test -n "$1"; do
 done
 #-FUNÇÕES--------------------------------------------------------------------------#
 
-instalar_pacotes() {
-	echo "\n Instalando e verificando todos os pacotes... \n"
-	sleep 1
-	echo "Dando update nos arquivos..."
+installPackagesAndGUI() {
+	echo "\n Instalando e atualizando todos os pacotes \n"
 	sudo apt-get update && sudo apt-get upgrade -y
-	echo "Verificando java..."
+	echo "Verificando java"
 	[ ! -x $(which java) ] && sudo apt-get install openjdk-11-jdk
 	echo "Instalando interface gráfica"
 	sudo apt-get install xrdp lxde-core lxde tigervnc-standalone-server -y
-	echo "Verificando git..."
+	echo "Verificando git"
 	[ ! -x $(which git) ] && sudo apt-get install git-all
-	echo "Verificando docker..."
-	[ ! -x $(which docker) ] && instalar_docker
+	echo "Verificando docker"
+	[ ! -x $(which docker) ] && install_docker
 }
 
 criar_urubu100() {
-	echo "\n Criando usuário urubu100... \n"
+	echo "\n Criando senha para usuario ubuntu \n"
 	sleep 1
 	sudo passwd ubuntu
+	echo "\n Criando usuário urubu100 \n"
 	sudo adduser urubu100
-
-	echo "Dando permissão de sudo para urubu100..."
-	#sudo usermod -aG sudo urubu100
-	#su urubu100
+	echo "Dando permissão de sudo para urubu100"
+	sudo usermod -aG sudo urubu100
+	echo "Trocando para usuario urubu100 "
+	su urubu100
 
 }
 
 clonar_github() {
-	echo "\n Clonando github e criando pastas... \n"
+	cd ~
+	cd home
+	cd urubu100
+	echo "\n Clonando github \n"
 	git clone https://github.com/pi-project-adsb/magna-aplications.git
-	cd magna-aplications	
+	cd magna-aplications
 
-}
-
-rodando_aplicacao() {
-	echo "Rodando a aplicacao..."
-	clear
-	echo "\n Tudo pronto... \n"
-	echo "\n Gostaria de rodar nossa aplicação? \n"
-	read run
-	#if [ \"$run\" == \"Y\"] || [ \"$run\" == \"y\"]; then
-		java -jar data-capture-1.0-SNAPSHOT-jar-with-dependencies.jar
-	#else
-		#echo "\nEntao ta, nos vemos na próxima!\n"
-
-	#fi
 }
 
 install_docker() {
+	echo "\n Instalando os pacotes do docker \n"
 	sudo apt install docker.io
 	#systemctl = inicia serviço
+	echo "Iniciando o serviço do docker"
 	sudo systemctl start docker
 	sudo systemctl enable docker
+	echo "Criando network"
 	sudo docker network create java_mysql
-
-	cd magna-aplications
 	cd mysql
+	echo "Criando imagem e container do database MySql"
 	docker_mysql
 	cd ..
 	cd java
+	echo "Criando imagem e container da aplicação Java"
 	docker_data_capture
 }
 
 docker_mysql() {
 	#-d = dessasociar do terminal (deixar de rodar apenas no terminal, deixa rodando em background)
 	#-p = set a porta
- 	sudo docker build -t mysql_magna .
+	sudo docker build -t mysql_magna .
 	#recebe a requisicao do docker e depois da maquina
 	sudo docker run -d -p 3306:3306 --name magnaSQL --net=java_mysql -e "MYSQL_ROOT_PASSWORD=urubu100" mysql_magna
 	#executa um comando -t = comando interativo; magna bash = entre no terminal, de modo interativo
@@ -117,7 +108,7 @@ docker_mysql() {
 }
 
 docker_data_capture() {
- 	sudo docker build -t data_capture_magna .
+	sudo docker build -t data_capture_magna .
 	sudo docker run -it --name data_capture_java --link magnaSQL --net=java_mysql data_capture_magna
 	#executa um comando -t = comando interativo; magna bash = entre no terminal, de modo interativo
 	#sudo docker exec -it data_capture_java bash
@@ -126,8 +117,11 @@ docker_data_capture() {
 
 main() {
 	criar_urubu100
-	instalar_pacotes
+	clear
+	installPackagesAndGUI
+	clear
 	clonar_github
+	clear
 	install_docker
 }
 
