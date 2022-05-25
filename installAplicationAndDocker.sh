@@ -76,11 +76,11 @@ dockerDataCapture() {
 
 main() {
 	createUserUrubu100
-	clear
+	#clear
 	installPackagesAndGUI
-	clear
+	#clear
 	cloneGithub
-	clear
+	#clear
 	installDocker
 }
 
