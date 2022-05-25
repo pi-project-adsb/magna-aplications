@@ -28,8 +28,6 @@ createUserUrubu100() {
 	sudo adduser urubu100
 	echo "Dando permissão de sudo para urubu100"
 	sudo usermod -aG sudo urubu100
-	cd ..
-	cd urubu100
 }
 
 cloneGithub() {
