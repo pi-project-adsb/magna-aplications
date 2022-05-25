@@ -5,7 +5,7 @@
 
 1° - Assim que se conectar em sua EC2, dê o seguinte comando:
 
-wget -O installAplicationAndDocker.sh https://raw.githubusercontent.com/pi-project-adsb/magna-aplications/master/installAplicationAndDocker.sh
+wget -O installAplicationAndDocker.sh https://raw.githubusercontent.com/pi-project-adsb/magna-aplications/master/installAplicationAndDockerCLI.sh
 
 Ele irá baixar nosso Shell Script, capaz de automatizar nosso processo de instalação
 
