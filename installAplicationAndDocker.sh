@@ -47,8 +47,8 @@ installPackagesAndGUI() {
 	sudo apt-get update && sudo apt-get upgrade -y
 	echo "Verificando java"
 	[ ! -x $(which java) ] && sudo apt-get install openjdk-11-jdk
-	echo "Instalando interface gráfica"
-	sudo apt-get install xrdp lxde-core lxde tigervnc-standalone-server -y
+	#echo "Instalando interface gráfica"
+	#sudo apt-get install xrdp lxde-core lxde tigervnc-standalone-server -y
 	echo "Verificando git"
 	[ ! -x $(which git) ] && sudo apt-get install git-all
 }
@@ -60,19 +60,14 @@ createUserUrubu100() {
 	sudo adduser urubu100
 	echo "Dando permissão de sudo para urubu100"
 	sudo usermod -aG sudo urubu100
-	echo "Trocando para usuario urubu100 "
-	su urubu100
-
+	cd ..
+	cd urubu100
 }
 
 cloneGithub() {
-	cd ~
-	cd home
-	cd urubu100
 	echo "\n Clonando github \n"
 	git clone https://github.com/pi-project-adsb/magna-aplications.git
 	cd magna-aplications
-
 }
 
 installDocker() {	
@@ -115,7 +110,7 @@ docker_data_capture() {
 }
 
 main() {
-	createUserUrubu100
+	#createUserUrubu100
 	clear
 	installPackagesAndGUI
 	clear
