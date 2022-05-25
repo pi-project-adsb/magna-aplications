@@ -10,17 +10,6 @@ varEXE=$1
 
 #-FUNÇÕES--------------------------------------------------------------------------#
 
-installPackagesAndGUI() {
-	echo "Instalando e atualizando todos os pacotes"
-	sudo apt-get update && sudo apt-get upgrade -y
-	echo "Verificando java"
-	[ ! -x $(which java) ] && sudo apt-get install openjdk-11-jdk
-	echo "Instalando interface gráfica"
-	sudo apt-get install xrdp lxde-core lxde tigervnc-standalone-server -y
-	echo "Verificando git"
-	[ ! -x $(which git) ] && sudo apt-get install git-all
-}
-
 createUserUrubu100() {
 	echo "Criando senha para usuario ubuntu"
 	sudo passwd ubuntu
@@ -75,10 +64,6 @@ dockerDataCapture() {
 }
 
 main() {
-	createUserUrubu100
-	#clear
-	installPackagesAndGUI
-	#clear
 	cloneGithub
 	#clear
 	installDocker
