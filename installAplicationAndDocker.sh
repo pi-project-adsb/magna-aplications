@@ -51,13 +51,10 @@ installPackagesAndGUI() {
 	sudo apt-get install xrdp lxde-core lxde tigervnc-standalone-server -y
 	echo "Verificando git"
 	[ ! -x $(which git) ] && sudo apt-get install git-all
-	echo "Verificando docker"
-	[ ! -x $(which docker) ] && install_docker
 }
 
-criar_urubu100() {
+createUserUrubu100() {
 	echo "\n Criando senha para usuario ubuntu \n"
-	sleep 1
 	sudo passwd ubuntu
 	echo "\n Criando usuário urubu100 \n"
 	sudo adduser urubu100
@@ -68,7 +65,7 @@ criar_urubu100() {
 
 }
 
-clonar_github() {
+cloneGithub() {
 	cd ~
 	cd home
 	cd urubu100
@@ -78,7 +75,9 @@ clonar_github() {
 
 }
 
-install_docker() {
+installDocker() {	
+	echo "Verificando docker"
+	[ ! -x $(which docker) ] && installDocker
 	echo "\n Instalando os pacotes do docker \n"
 	sudo apt install docker.io
 	#systemctl = inicia serviço
@@ -116,13 +115,13 @@ docker_data_capture() {
 }
 
 main() {
-	criar_urubu100
+	createUserUrubu100
 	clear
 	installPackagesAndGUI
 	clear
-	clonar_github
+	cloneGithub
 	clear
-	install_docker
+	installDocker
 }
 
 #-EXECUÇÃO-------------------------------------------------------------------------#
