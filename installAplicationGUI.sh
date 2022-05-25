@@ -39,7 +39,7 @@ installDocker() {
 	echo "Criando imagem e container do database MySql"
 	dockerMySql
 	cd ..
-	cd java
+	cd swing
 	echo "Criando imagem e container da aplicação Java"
 	dockerDataCapture
 
